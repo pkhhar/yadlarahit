@@ -20,7 +20,6 @@ import androidx.core.content.FileProvider;
 
 import com.example.test3.R;
 import com.example.test3.databinding.ActivityAddItemBinding;
-import com.example.test3.databinding.ActivityMainBinding;
 
 import java.io.File;
 import java.io.IOException;
