@@ -3,18 +3,25 @@ package com.example.test3.repostory;
 import java.util.List;
  public  class   UserModel {
     private String firstName;
+    private static Boolean isLogin;
     private String lastName;
     private String password;
     private String email;
     private String id;
-    private List<furnitureModel> productList;
+    private List<FurnitureModel> productList;
 
+    public  UserModel()
+    {
+
+
+    }
     public UserModel(String firstName, String lastName, String password, String email, String id) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
         this.id = id;
+
     }
 
     public String getFirstName() {
@@ -57,11 +64,19 @@ import java.util.List;
         this.id = id;
     }
 
-    public List<furnitureModel> getProductList() {
+    public List<FurnitureModel> getProductList() {
         return productList;
     }
 
-    public void setProductList(List<furnitureModel> productList) {
+    public void setProductList(List<FurnitureModel> productList) {
         this.productList = productList;
     }
-}
+
+     public  Boolean getIsLogin() {
+         return isLogin;
+     }
+
+     public  void setIsLogin(Boolean isLogin) {
+         UserModel.isLogin = isLogin;
+     }
+ }

@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.test3.R;
 import com.example.test3.databinding.FragmentGalleryBinding;
 
 public class GalleryFragment extends Fragment {
@@ -21,17 +22,9 @@ public class GalleryFragment extends Fragment {
         GalleryViewModel galleryViewModel =
                 new ViewModelProvider(this).get(GalleryViewModel.class);
 
-        binding = FragmentGalleryBinding.inflate(inflater, container, false);
-        View root = binding.getRoot();
+        View v  = inflater.inflate(R.layout.fragment_gallery, container, false);
 
-        final TextView textView = binding.textGallery;
-        galleryViewModel.getText().observe(getViewLifecycleOwner(), textView::setText);
-        return root;
-    }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        binding = null;
+        return v;
     }
 }

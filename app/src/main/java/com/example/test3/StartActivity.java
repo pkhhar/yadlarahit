@@ -1,9 +1,13 @@
 package com.example.test3;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
+import android.widget.Button;
+import android.widget.Toast;
 
+import com.example.test3.ui.addItem.addItemActivity;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
@@ -27,13 +31,13 @@ public class StartActivity extends AppCompatActivity {
 
         binding = ActivityStartBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
-
         setSupportActionBar(binding.appBarStart.toolbar);
-        binding.appBarStart.fab.setOnClickListener(new View.OnClickListener() {
+        binding.appBarStart.MoveToAddItemActivity.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onClick(View view)
+            {
+                Intent intent = new Intent(StartActivity.this, addItemActivity.class);
+                startActivity(intent);
             }
         });
         DrawerLayout drawer = binding.drawerLayout;
@@ -41,7 +45,7 @@ public class StartActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_profile)
+                R.id.nav_home, R.id.nav_info, R.id.nav_Logout,R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_start);

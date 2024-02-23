@@ -1,6 +1,6 @@
 package com.example.test3.repostory;
 
-public class furnitureModel {
+public class FurnitureModel {
 
     private String name;
     private double price;
@@ -12,7 +12,9 @@ public class furnitureModel {
     private String picture;
     private String catalogNumber;
 
-    public furnitureModel(String name, double price, String material, double length, double width, double height, String color, String picture, String catalogNumber) {
+
+
+    public FurnitureModel(String name, double price, String material, double length, double width, double height, String color, String picture, String catalogNumber) {
         this.name = name;
         this.price = price;
         this.material = material;

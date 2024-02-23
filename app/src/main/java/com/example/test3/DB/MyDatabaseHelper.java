@@ -7,8 +7,13 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
 
+import com.example.test3.repostory.FurnitureModel;
+
+import java.util.ArrayList;
+
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
+    private ArrayList<FurnitureModel> mainList = new ArrayList<>();
     private Context context;
     private static final String DATABASE_NAME = "user.db";
     private static final int DATABASE_VERSION = 1;
