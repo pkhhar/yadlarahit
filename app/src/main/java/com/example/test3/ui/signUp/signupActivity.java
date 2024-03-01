@@ -54,6 +54,7 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         MoveLogin.setOnClickListener(this);
         upModel = new signUpModel();
     }
+    //
 
     @Override
     public void onClick(View view)
