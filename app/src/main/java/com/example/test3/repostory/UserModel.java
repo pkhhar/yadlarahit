@@ -2,13 +2,13 @@ package com.example.test3.repostory;
 
 import java.util.List;
  public  class   UserModel {
-    private String firstName;
-    private static Boolean isLogin;
-    private String lastName;
-    private String password;
-    private String email;
-    private String id;
-    private List<FurnitureModel> productList;
+    private static String firstName;
+    private static Boolean IsLogin;
+    private  static String lastName;
+    private static String password;
+    private static String email;
+    private static String id;
+    private static List<FurnitureModel> productList;
 
     public  UserModel()
     {
@@ -72,11 +72,11 @@ import java.util.List;
         this.productList = productList;
     }
 
-     public  Boolean getIsLogin() {
-         return isLogin;
+     public Boolean getLogin() {
+         return IsLogin;
      }
 
-     public  void setIsLogin(Boolean isLogin) {
-         UserModel.isLogin = isLogin;
+     public void setLogin(Boolean login) {
+         IsLogin = login;
      }
  }

@@ -1,39 +1,51 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:id="@+id/welcomebackImage"
+        android:background="@drawable/welcomeback"
+        />
 
     <EditText
-        android:maxLength="10"
+        android:layout_below="@+id/welcomebackImage"
+        android:textAlignment="center"
         android:id="@+id/editTextEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email" />
-
+        android:hint="אימייל" />
 
 
     <EditText
         android:maxLength="20"
         android:id="@+id/editTextPassword"
+        android:textAlignment="center"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/editTextEmail"
         android:inputType="textPassword"
-        android:hint="Password" />
-    <CheckBox
-        android:id="@+id/checkboxRememberMe"
-        android:layout_width="wrap_content"
-        android:text="remember me"
-        android:textSize="20dp"
+        android:hint="סיסמה" />
 
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/editTextPassword"/>
 
     <Button
         android:id="@+id/buttonLogin"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/checkboxRememberMe"
-        android:text="Login" />
+        android:layout_below="@id/editTextPassword"
+        android:text="הכנס" />
 
+    <TextView
+        android:id="@+id/MoveToSignupPage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:text="עבור לדף הרשמה"
+        android:layout_below="@id/buttonLogin"
+        android:textDirection="ltr"
+
+        />
 </RelativeLayout>

@@ -11,24 +11,23 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.test3.LoginActivity;
+import com.example.test3.ui.login.LoginActivity;
 import com.example.test3.R;
-import com.example.test3.repostory.UserModel;
 import com.example.test3.ui.signUp.signupActivity;
 
 public class profileFragment extends Fragment implements View.OnClickListener
 {
 private  View v;
 private Intent intent;
-UserModel userModel;
-private  String Email,Password;
-private Button signInButton,logOutButton;
-private  SharedPreferences sharedPreferences;
+private Button signInOrOutButton;
 
-private TextView createAccountButton;
+private RelativeLayout relativeLayout;
+private SharedPreferences sharedPreferences;
+private TextView createAccountButton, nameoftheAccount;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -41,20 +40,25 @@ private TextView createAccountButton;
     {
 
 
+
+
          v = inflater.inflate(R.layout.fragment_profile, container, false);
-        signInButton = v.findViewById(R.id.signInAccountButton);
-        logOutButton = v.findViewById(R.id.btnlogOut);
+         relativeLayout = v.findViewById(R.id.bla);
+         nameoftheAccount = v.findViewById(R.id.textViewUsername);
+         sharedPreferences = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+
+        signInOrOutButton = v.findViewById(R.id.signInAccountButton);
             createAccountButton = v.findViewById(R.id.createAccountButton);
-        signInButton.setOnClickListener(this);
-           logOutButton.setOnClickListener(this);
+        signInOrOutButton.setOnClickListener(this);
             createAccountButton.setOnClickListener(this);
-        sharedPreferences = getContext().getSharedPreferences("checkbox",Context.MODE_PRIVATE);
-        if(sharedPreferences != null)
-        {
-            Email = sharedPreferences.getString("email","");
-            Password = sharedPreferences.getString("password","");
-            Toast.makeText(requireActivity(), ""+Email + '\n' + Password, Toast.LENGTH_SHORT).show();
-        }
+
+
+            if(sharedPreferences != null)
+            {
+                nameoftheAccount.setText(sharedPreferences.getString("fname",""));
+                relativeLayout.removeView(signInOrOutButton);
+                relativeLayout.removeView(createAccountButton);
+            }
 
         return v;
 
@@ -64,13 +68,14 @@ private TextView createAccountButton;
     @Override
     public void onClick(View view)
     {
-        if(signInButton == view)
-    {
 
+        if(signInOrOutButton == view)
+    {
             intent = new Intent(requireActivity(), LoginActivity.class);
             startActivity(intent);
+        }
 
-    }
+
         if (createAccountButton == view)
         {
            intent = new Intent(requireActivity(), signupActivity.class);

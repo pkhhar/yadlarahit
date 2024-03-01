@@ -66,9 +66,25 @@
         android:layout_height="wrap_content"
         android:text="Sign Up"
         android:layout_below="@id/idEditText"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/roundbutton2"
         android:textColor="#FFFFFF"
         />
+
+    <TextView
+        android:id="@+id/moveToLogin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="17dp"
+        android:layout_marginTop="15dp"
+        android:textDirection="rtl"
+        android:layout_below="@+id/signUpButton"
+        android:layout_centerHorizontal="true"
+        android:text="רשום כבר לחץ כאן !"
+        />
+
+
+
 
 </RelativeLayout>

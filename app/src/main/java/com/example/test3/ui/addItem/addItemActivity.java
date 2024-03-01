@@ -1,12 +1,9 @@
 package com.example.test3.ui.addItem;
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.hardware.Camera;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
-import android.widget.Button;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -15,18 +12,15 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
 import androidx.core.content.FileProvider;
 
-import com.example.test3.R;
 import com.example.test3.databinding.ActivityAddItemBinding;
 
 import java.io.File;
-import java.io.IOException;
 
 public class addItemActivity extends AppCompatActivity {
 
-
+    private Spinner spinnerType;
     private  static  final  int CAMERA_PERMISSION_CODE =1;
     ActivityAddItemBinding addItemBinding;
     ActivityResultLauncher<Uri> takePictureLauncher;

@@ -40,11 +40,12 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         />
-    <EditText
-        android:id="@+id/idPutProduct"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        />
+   <Spinner
+       android:layout_width="100dp"
+       android:layout_height="60dp"
+       android:layout_gravity="right"
+       android:gravity="center"
+       />
 
     <Button
         android:id="@+id/addFurnutureButton"

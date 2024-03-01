@@ -1,5 +1,8 @@
 package com.example.test3.ui.home;
 
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.test3.R;
+import com.example.test3.ui.signUp.signupActivity;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
@@ -38,7 +42,13 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         imagelivingRoomButton.setOnClickListener(this);
         imageoutsideButton.setOnClickListener(this);
         btnSearch.setOnClickListener(this);
+        SharedPreferences sharedPreferences = getContext().getSharedPreferences("user", Context.MODE_PRIVATE);
+        if(sharedPreferences == null)
+        {
+            Intent intent = new Intent(requireActivity(), signupActivity.class);
+            startActivity(intent);
 
+        }
 
         return  v;
     }

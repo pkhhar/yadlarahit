@@ -1,14 +1,12 @@
-package com.example.test3;
+package com.example.test3.ui.start;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Menu;
-import android.widget.Button;
-import android.widget.Toast;
 
+import com.example.test3.R;
 import com.example.test3.ui.addItem.addItemActivity;
-import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.navigation.NavController;
@@ -45,7 +43,7 @@ public class StartActivity extends AppCompatActivity {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         mAppBarConfiguration = new AppBarConfiguration.Builder(
-                R.id.nav_home, R.id.nav_info, R.id.nav_Logout,R.id.nav_profile)
+                R.id.nav_home, R.id.nav_info, R.id.nav_logout,R.id.nav_profile)
                 .setOpenableLayout(drawer)
                 .build();
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment_content_start);
@@ -53,12 +51,7 @@ public class StartActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navigationView, navController);
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.start, menu);
-        return true;
-    }
+
 
     @Override
     public boolean onSupportNavigateUp() {
