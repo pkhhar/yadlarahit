@@ -14,14 +14,13 @@ import android.widget.Toast;
 import com.example.test3.DB.MyDatabaseHelper;
 import com.example.test3.R;
 import com.example.test3.repostory.UserModel;
-import com.example.test3.ui.home.HomeFragment;
 import com.example.test3.ui.login.LoginActivity;
 import com.example.test3.ui.start.StartActivity;
 
 public class signupActivity extends AppCompatActivity implements View.OnClickListener
 {
 
-  private   EditText Fname,Lname,Email,Password,Id;
+  private   EditText Fname,Lname,Email,Password,Phone;
    private MyDatabaseHelper myDatabaseHelper;
 
    private  UserModel userModel;
@@ -48,13 +47,13 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         Lname = findViewById(R.id.lastNameEditText);
         Email = findViewById(R.id.emailEditText);
         Password = findViewById(R.id.passwordEditText);
-        Id = findViewById(R.id.idEditText);
+        Phone = findViewById(R.id.phoneEditText);
         myDatabaseHelper = new MyDatabaseHelper(this);
         btnSignUp.setOnClickListener(this);
         MoveLogin.setOnClickListener(this);
         upModel = new signUpModel();
     }
-    //
+
 
     @Override
     public void onClick(View view)
@@ -90,17 +89,22 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
             return;
 
         }
-        if(Id.getText().toString().length() ==0)
+        if(Phone.getText().toString().length() ==0)
         {
-            Toast.makeText(this, "write id", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "write phone", Toast.LENGTH_SHORT).show();
             return;
 
         }
+        if(Phone.getText().toString().trim().length() != 10)
+        {
+            Toast.makeText(this, "phone must 10 digits", Toast.LENGTH_SHORT).show();
+            return;
+        }
         if(btnSignUp == view)
         {
-            userModel = new UserModel(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Id.getText().toString().trim()));
+            userModel = new UserModel(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
 
-            myDatabaseHelper.addUser(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Id.getText().toString().trim()));
+            myDatabaseHelper.addUser(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
 
             Intent intent = new Intent(signupActivity.this, LoginActivity.class);
             startActivity(intent);

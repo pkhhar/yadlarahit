@@ -9,17 +9,21 @@
         android:id="@+id/titleTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
+        android:text="דף הרשמה"
         android:textSize="24sp"
         android:textColor="#3498db"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="32dp" />
+        android:layout_marginTop="32dp"
+        android:gravity="center"
+        />
 
     <EditText
+        android:gravity="center"
+
         android:id="@+id/firstNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="First Name"
+        android:hint="שם פרטי"
         android:layout_below="@id/titleTextView"
         android:layout_marginTop="16dp"
         android:inputType="textPersonName" />
@@ -28,34 +32,40 @@
         android:id="@+id/lastNameEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Last Name"
+        android:hint="שם משפחה"
         android:layout_below="@id/firstNameEditText"
         android:layout_marginTop="16dp"
-        android:inputType="textPersonName" />
+        android:inputType="textPersonName"
+        android:gravity="center"
+        />
 
     <EditText
         android:id="@+id/emailEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="אימייל"
         android:layout_below="@id/lastNameEditText"
         android:layout_marginTop="16dp"
-        android:inputType="textEmailAddress" />
+        android:inputType="textEmailAddress"
+        android:gravity="center"
+        />
 
     <EditText
         android:id="@+id/passwordEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Password"
+        android:gravity="center"
+        android:hint="סיסמה"
         android:layout_below="@id/emailEditText"
         android:layout_marginTop="16dp"
         android:inputType="textPassword" />
 
     <EditText
-        android:id="@+id/idEditText"
+        android:id="@+id/phoneEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="ID"
+        android:gravity="center"
+        android:hint="טלפון"
         android:layout_below="@id/passwordEditText"
         android:layout_marginTop="16dp"
         android:inputType="text" />
@@ -64,8 +74,8 @@
         android:id="@+id/signUpButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sign Up"
-        android:layout_below="@id/idEditText"
+        android:text="הרשמה"
+        android:layout_below="@id/phoneEditText"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
         android:background="@drawable/roundbutton2"

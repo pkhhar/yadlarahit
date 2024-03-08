@@ -23,6 +23,7 @@ public class addItemActivity extends AppCompatActivity {
     private Spinner spinnerType;
     private  static  final  int CAMERA_PERMISSION_CODE =1;
     ActivityAddItemBinding addItemBinding;
+
     ActivityResultLauncher<Uri> takePictureLauncher;
     Uri imageUri;
     @Override

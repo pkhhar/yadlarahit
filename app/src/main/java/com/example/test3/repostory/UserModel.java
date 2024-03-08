@@ -7,20 +7,19 @@ import java.util.List;
     private  static String lastName;
     private static String password;
     private static String email;
-    private static String id;
-    private static List<FurnitureModel> productList;
+    private static String phone;
 
     public  UserModel()
     {
 
 
     }
-    public UserModel(String firstName, String lastName, String password, String email, String id) {
+    public UserModel(String firstName, String lastName, String password, String email, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
         this.email = email;
-        this.id = id;
+        this.phone = phone;
 
     }
 
@@ -56,21 +55,12 @@ import java.util.List;
         this.email = email;
     }
 
-    public String getId() {
-        return id;
+    public String getPhone() {
+        return phone;
     }
 
-    public void setId(String  id) {
-        this.id = id;
-    }
+    public void setphone(String phone) {this.phone = phone;}
 
-    public List<FurnitureModel> getProductList() {
-        return productList;
-    }
-
-    public void setProductList(List<FurnitureModel> productList) {
-        this.productList = productList;
-    }
 
      public Boolean getLogin() {
          return IsLogin;

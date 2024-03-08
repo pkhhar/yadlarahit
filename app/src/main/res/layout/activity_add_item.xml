@@ -21,24 +21,52 @@
         />
     
     <EditText
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:hint="שם המוצר"
         android:id="@+id/namePutProduct"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         />
     <EditText
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:hint="מחיר המוצר"
         android:id="@+id/pricePutProduct"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         />
     <EditText
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:hint="אורך המוצר"
         android:id="@+id/lengthPutProduct"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         />
     <EditText
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:hint="רוחב המוצר"
         android:id="@+id/widthPutProduct"
         android:layout_width="match_parent"
         android:layout_height="50dp"
+        />
+    <EditText
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:hint="גובה המוצר"
+        android:id="@+id/heightPutProduct"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        />
+    <EditText
+        android:id="@+id/colorPutProduct"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:hint="צבע המוצר"
+        android:layout_height="wrap_content"
         />
    <Spinner
        android:layout_width="100dp"
