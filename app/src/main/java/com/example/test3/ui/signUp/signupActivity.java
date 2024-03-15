@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.test3.DB.FireBaseDataBase;
 import com.example.test3.DB.MyDatabaseHelper;
 import com.example.test3.R;
 import com.example.test3.repostory.UserModel;
@@ -102,8 +103,10 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         }
         if(btnSignUp == view)
         {
+            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
             userModel = new UserModel(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
-
+            FireBaseDataBase fireBaseDataBase = new FireBaseDataBase();
+            fireBaseDataBase.AddUser(Fname.getText().toString(),Lname.getText().toString(),Password.getText().toString(),Email.getText().toString(),Phone.getText().toString());
             myDatabaseHelper.addUser(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
 
             Intent intent = new Intent(signupActivity.this, LoginActivity.class);

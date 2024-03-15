@@ -10,13 +10,14 @@ import android.widget.Toast;
 import com.example.test3.repostory.FurnitureModel;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MyDatabaseHelper extends SQLiteOpenHelper {
 
-    private ArrayList<FurnitureModel> mainList = new ArrayList<>();
     private Context context;
     private static final String DATABASE_NAME = "user.db";
-    private static final int DATABASE_VERSION = 1;
+    private static final int DATABASE_VERSION = 2;
 
     private static final String TABLE_NAME = "my_database";
     private static final String COLUMN_ID = "_id";
@@ -24,12 +25,13 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
     private static final String COLUMN_Lname = "lname_title";
     private static final String COLUMN_Email = "email_title";
     private static final String COLUMN_Password = "password_title";
-    private static final String COLUMN_Id = "id_title";
+    private static final String COLUMN_Phone = "phone_title";
 
     public MyDatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db) {
@@ -39,7 +41,7 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
                 COLUMN_Lname + " TEXT, " +
                 COLUMN_Email + " TEXT, " +
                 COLUMN_Password + " TEXT, " +
-                COLUMN_Id + " TEXT);";
+                COLUMN_Phone + " TEXT);";
         db.execSQL(query);
     }
 
@@ -49,14 +51,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-  public   void addUser(String fname, String lname, String email, String password, String id) {
+  public   void addUser(String fname, String lname, String email, String password, String phone) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_Fname, fname);
         cv.put(COLUMN_Lname, lname);
         cv.put(COLUMN_Email, email);
         cv.put(COLUMN_Password, password);
-        cv.put(COLUMN_Id, id);
+        cv.put(COLUMN_Phone,phone);
         long result = db.insert(TABLE_NAME, null, cv);
         if (result == -1) {
             Toast.makeText(context, "Failed to add user", Toast.LENGTH_SHORT).show();
@@ -70,14 +72,14 @@ public class MyDatabaseHelper extends SQLiteOpenHelper {
         return db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     }
 
-  public   void updateUser(String row_id, String fname, String lname, String email, String password, String id) {
+  public   void updateUser(String row_id, String fname, String lname, String email, String password, String phone) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(COLUMN_Fname, fname);
         cv.put(COLUMN_Lname, lname);
         cv.put(COLUMN_Email, email);
         cv.put(COLUMN_Password, password);
-        cv.put(COLUMN_Id, id);
+        cv.put(COLUMN_Phone, phone);
         int result = db.update(TABLE_NAME, cv, COLUMN_ID + " = ?", new String[]{row_id});
         if (result > 0) {
             Toast.makeText(context, "User updated successfully", Toast.LENGTH_SHORT).show();
