@@ -52,7 +52,7 @@ public class FireBaseDataBase
                 });
     }
 
-    public void AddFurniture(String email, String Height, String Length, String Width, String Price, String name, String color, String type)
+    public void AddFurniture(String email, String Name, String Price, String Length, String Width, String Height, String Color, String Type)
     {
         db.collection("users")
                 .get()
@@ -64,14 +64,13 @@ public class FireBaseDataBase
                                 if(document.getData().get("Email").toString().equals(email))
                                 {
                                     Map<String, Object> user = new HashMap<>();
-                                    user.put("Height",Height);
+                                    user.put("Name",Name);
+                                    user.put("Price",Price);
                                     user.put("Length",Length);
                                     user.put("Width",Width);
-                                    user.put("Price",Price);
-                                    user.put("Name",name);
-                                    user.put("Color", color);
-                                    user.put("Type", type);
-
+                                    user.put("Height",Height);
+                                    user.put("Color",Color);
+                                    user.put("Type", Type);
 
                                     // Add a new document with a generated ID
                                     db.collection("users").document(document.getId()).collection("Furniture")

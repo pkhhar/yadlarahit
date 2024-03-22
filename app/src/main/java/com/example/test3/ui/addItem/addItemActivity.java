@@ -1,9 +1,16 @@
 package com.example.test3.ui.addItem;
 import android.Manifest;
+import android.app.ActionBar;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultCallback;
@@ -14,13 +21,22 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+import com.example.test3.DB.FireBaseDataBase;
+import com.example.test3.R;
 import com.example.test3.databinding.ActivityAddItemBinding;
 
+import org.w3c.dom.Text;
+
 import java.io.File;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
-public class addItemActivity extends AppCompatActivity {
+public class addItemActivity extends AppCompatActivity  implements View.OnClickListener  {
 
+    private EditText name,price,length,width,height,color;
     private Spinner spinnerType;
+    private Button btnAddFurniture;
     private  static  final  int CAMERA_PERMISSION_CODE =1;
     ActivityAddItemBinding addItemBinding;
 
@@ -34,7 +50,28 @@ public class addItemActivity extends AppCompatActivity {
         setContentView(addItemBinding.getRoot());
         imageUri = createUri();
         registerPictureLuncher();
+        name = findViewById(R.id.namePutProduct);
+        price = findViewById(R.id.pricePutProduct);
+        length = findViewById(R.id.lengthPutProduct);
+        width = findViewById(R.id.widthPutProduct);
+        height = findViewById(R.id.heightPutProduct);
+        color = findViewById(R.id.colorPutProduct);
+        spinnerType = findViewById(R.id.spinnerPutProduct);
 
+
+        List<String> lst = new LinkedList<>();
+        lst.add("בחר קטגוריה");
+        lst.add("חדר שינה");
+        lst.add("שירותים");
+        lst.add("מטבח");
+        lst.add("סלון");
+        lst.add("חצר");
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,android.R.layout.simple_spinner_item,lst);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerType.setAdapter(adapter);
+
+        btnAddFurniture = findViewById(R.id.addFurnutureButton);
         addItemBinding.btnTakePicture.setOnClickListener(view -> {
             checkCameraPermissionAndOpenCamera();
         });
@@ -100,5 +137,20 @@ public class addItemActivity extends AppCompatActivity {
             }
 
         }
+    }
+
+    @Override
+    public void onClick(View v)
+    {
+        if(btnAddFurniture == v)
+        {
+            SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
+    String currentEmail =sharedPreferences.getString("email","");
+            FireBaseDataBase fireBaseDataBase = new FireBaseDataBase();
+            fireBaseDataBase.AddFurniture(currentEmail,name.getText().toString().trim(),price.getText().toString().trim(),length.getText().toString().trim(),width.getText().toString().trim(),height.getText().toString().trim(),color.getText().toString().trim(),spinnerType.getSelectedItem().toString().trim());
+
+        }
+
+
     }
 }
