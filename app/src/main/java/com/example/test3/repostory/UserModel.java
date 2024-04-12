@@ -1,5 +1,9 @@
 package com.example.test3.repostory;
 
+
+import com.example.test3.DB.FireBaseDataBase;
+
+import java.util.LinkedList;
 import java.util.List;
  public  class   UserModel {
     private static String firstName;
@@ -8,6 +12,7 @@ import java.util.List;
     private static String password;
     private static String email;
     private static String phone;
+    FireBaseDataBase firebaseHelper = new FireBaseDataBase();
 
     public  UserModel()
     {
@@ -21,6 +26,11 @@ import java.util.List;
         this.email = email;
         this.phone = phone;
 
+    }
+
+    public void SearchFurniture(String Furniture, FireBaseDataBase.searchDone callback)
+    {
+        firebaseHelper.getSomeFurniture(Furniture, callback);
     }
 
     public String getFirstName() {

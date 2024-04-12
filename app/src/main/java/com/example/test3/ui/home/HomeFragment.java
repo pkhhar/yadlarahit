@@ -1,5 +1,6 @@
 package com.example.test3.ui.home;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -14,14 +15,21 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import com.example.test3.DB.FireBaseDataBase;
 import com.example.test3.R;
+import com.example.test3.displayFurniture.displayFurniture;
+import com.example.test3.repostory.FurnitureModel;
 import com.example.test3.ui.signUp.signupActivity;
+
+import java.util.LinkedList;
 
 public class HomeFragment extends Fragment implements View.OnClickListener {
 
     private Button btnSearch, imagebedRoomButton,imagebathRoomButton,imagekitchenRoomButton,imagelivingRoomButton,imageoutsideButton;
 
     private EditText searchView;
+
+    FireBaseDataBase firebaseHelper = new FireBaseDataBase();
     private View v;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -78,6 +86,12 @@ public class HomeFragment extends Fragment implements View.OnClickListener {
         {
             Toast.makeText(requireActivity(), "outside", Toast.LENGTH_SHORT).show();
 
+        }
+        if(btnSearch == view)
+        {
+            Intent intent = new Intent(requireActivity(), displayFurniture.class);
+            intent.putExtra("Furniture", searchView.getText().toString());
+            startActivity(intent);
         }
 
 

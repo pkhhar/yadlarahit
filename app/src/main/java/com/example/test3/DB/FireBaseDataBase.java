@@ -6,18 +6,22 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
+import com.example.test3.repostory.FurnitureModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class FireBaseDataBase
 {
@@ -94,6 +98,44 @@ public class FireBaseDataBase
                         }
                     }
                 });
+    }
+
+    public interface searchDone
+    {
+        void onSearchDone(LinkedList<FurnitureModel> list);
+    }
+    public void getSomeFurniture(String Furniture, searchDone callback)
+    {
+        LinkedList<FurnitureModel> list = new LinkedList<>();
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()) {
+                    int index = task.getResult().size();
+                    AtomicInteger index2 = new AtomicInteger(0);
+                    for (DocumentSnapshot document : task.getResult()) {
+                        db.collection("users").document(document.getId()).collection("Furniture").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                            @Override
+                            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                                if(task.isSuccessful()) {
+                                    index2.set(index2.get() + 1);
+                                    for (DocumentSnapshot document : task.getResult()) {
+                                        if (document.getData().get("Name").toString().equals(Furniture)) {
+                                            FurnitureModel temp = new FurnitureModel(document.getData().get("Name").toString(), document.getData().get("Price").toString(), document.getData().get("Length").toString(), document.getData().get("Width").toString(), document.getData().get("Height").toString(), document.getData().get("Color").toString(), document.getData().get("Type").toString());
+                                            list.add(temp);
+                                        }
+                                    }
+                                    if (index2.get() == index) {
+                                        callback.onSearchDone(list);
+                                    }
+                                }
+                            }
+                        });
+                    }
+
+                }
+            }
+        });
     }
 
 }
