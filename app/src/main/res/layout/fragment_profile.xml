@@ -39,39 +39,41 @@
             android:layout_marginTop="8dp"
             android:text=""
             android:textSize="16sp"/>
-
-        <Button
-            android:id="@+id/signInAccountButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewEmail"
-            android:layout_marginTop="30dp"
-            android:text="sign in"
-            android:background="#4285f4"
-            android:textColor="#ffffff"
-            android:padding="15dp"/>
         <TextView
-
-            android:clickable="true"
-            android:textAllCaps="false"
-            android:id="@+id/createAccountButton"
+            android:id="@+id/textViewPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Don't have an account? Create one"
-            android:textSize="15dp"
-            android:textColor="#000000"
-            android:background="#00AAAAAA"
-            android:layout_below="@id/signInAccountButton" />
-        <Button
-            android:layout_width="100dp"
-            android:id="@+id/btnlogOut"
-            android:textSize="15dp"
-            android:textAllCaps="false"
-            android:text="Log Out"
-            android:layout_height="100dp"
-            android:layout_below="@+id/createAccountButton"
-            android:layout_marginTop="330dp"
+            android:layout_below="@id/textViewEmail"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="8dp"
+            android:text=""
+            android:textSize="16sp" />
+
+        <TextView
+            android:layout_below="@id/textViewEmail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/updateUser"
+            android:layout_marginTop="15dp"
+            android:text="update user"
+            android:layout_marginLeft="60dp"
+            android:layout_alignParentLeft="true"
+            android:textSize="20dp"
             />
+        <TextView
+            android:layout_below="@id/textViewEmail"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="60dp"
+            android:layout_marginTop="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeUser"
+            android:text="remove user"
+            android:textSize="20dp"
+            />
+
+
+
 
     </RelativeLayout>
 

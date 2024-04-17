@@ -27,7 +27,7 @@ private Button signInOrOutButton;
 
 private RelativeLayout relativeLayout;
 private SharedPreferences sharedPreferences;
-private TextView createAccountButton, nameoftheAccount;
+private TextView nameoftheAccount;
     @Override
     public void onCreate(Bundle savedInstanceState)
     {
@@ -46,19 +46,14 @@ private TextView createAccountButton, nameoftheAccount;
          relativeLayout = v.findViewById(R.id.bla);
          nameoftheAccount = v.findViewById(R.id.textViewUsername);
          sharedPreferences = requireContext().getSharedPreferences("user", Context.MODE_PRIVATE);
-
-        signInOrOutButton = v.findViewById(R.id.signInAccountButton);
-            createAccountButton = v.findViewById(R.id.createAccountButton);
-        signInOrOutButton.setOnClickListener(this);
-            createAccountButton.setOnClickListener(this);
+        nameoftheAccount.setText(sharedPreferences.getString("fname",""));
 
 
-            if(sharedPreferences != null)
-            {
-                nameoftheAccount.setText(sharedPreferences.getString("fname",""));
-                relativeLayout.removeView(signInOrOutButton);
-                relativeLayout.removeView(createAccountButton);
-            }
+
+
+
+
+
 
         return v;
 
@@ -75,12 +70,6 @@ private TextView createAccountButton, nameoftheAccount;
             startActivity(intent);
         }
 
-
-        if (createAccountButton == view)
-        {
-           intent = new Intent(requireActivity(), signupActivity.class);
-        startActivity(intent);
-        }
 
 
 

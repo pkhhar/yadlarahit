@@ -1,6 +1,7 @@
 package com.example.test3.ui.addItem;
 import android.Manifest;
 import android.app.ActionBar;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
@@ -24,6 +25,8 @@ import androidx.core.content.FileProvider;
 import com.example.test3.DB.FireBaseDataBase;
 import com.example.test3.R;
 import com.example.test3.databinding.ActivityAddItemBinding;
+import com.example.test3.ui.home.HomeFragment;
+import com.example.test3.ui.start.StartActivity;
 
 import org.w3c.dom.Text;
 
@@ -32,7 +35,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
-public class addItemActivity extends AppCompatActivity  implements View.OnClickListener  {
+public class    addItemActivity extends AppCompatActivity  implements View.OnClickListener  {
 
     private EditText name,price,length,width,height,color;
     private Spinner spinnerType;
@@ -57,7 +60,9 @@ public class addItemActivity extends AppCompatActivity  implements View.OnClickL
         height = findViewById(R.id.heightPutProduct);
         color = findViewById(R.id.colorPutProduct);
         spinnerType = findViewById(R.id.spinnerPutProduct);
+        btnAddFurniture = findViewById(R.id.addFurnutureButton);
 
+        btnAddFurniture.setOnClickListener(this);
 
         List<String> lst = new LinkedList<>();
         lst.add("בחר קטגוריה");
@@ -71,7 +76,6 @@ public class addItemActivity extends AppCompatActivity  implements View.OnClickL
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerType.setAdapter(adapter);
 
-        btnAddFurniture = findViewById(R.id.addFurnutureButton);
         addItemBinding.btnTakePicture.setOnClickListener(view -> {
             checkCameraPermissionAndOpenCamera();
         });
@@ -148,7 +152,8 @@ public class addItemActivity extends AppCompatActivity  implements View.OnClickL
     String currentEmail =sharedPreferences.getString("email","");
             FireBaseDataBase fireBaseDataBase = new FireBaseDataBase();
             fireBaseDataBase.AddFurniture(currentEmail,name.getText().toString().trim(),price.getText().toString().trim(),length.getText().toString().trim(),width.getText().toString().trim(),height.getText().toString().trim(),color.getText().toString().trim(),spinnerType.getSelectedItem().toString().trim());
-
+            Intent intent = new Intent(this, StartActivity.class);
+            startActivity(intent);
         }
 
 
