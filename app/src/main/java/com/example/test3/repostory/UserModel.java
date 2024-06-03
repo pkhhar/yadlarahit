@@ -7,19 +7,19 @@ import java.util.LinkedList;
 import java.util.List;
  public  class   UserModel {
     private static String firstName;
-    private static Boolean IsLogin;
     private  static String lastName;
     private static String password;
     private static String email;
     private static String phone;
-    FireBaseDataBase firebaseHelper = new FireBaseDataBase();
+   private FireBaseDataBase firebaseHelper = new FireBaseDataBase();
+
 
     public  UserModel()
     {
 
 
     }
-    public UserModel(String firstName, String lastName, String password, String email, String phone) {
+    public UserModel(String firstName, String lastName,String email, String password, String phone) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -72,11 +72,4 @@ import java.util.List;
     public void setphone(String phone) {this.phone = phone;}
 
 
-     public Boolean getLogin() {
-         return IsLogin;
-     }
-
-     public void setLogin(Boolean login) {
-         IsLogin = login;
-     }
  }

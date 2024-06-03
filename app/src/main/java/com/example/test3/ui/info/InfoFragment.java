@@ -13,7 +13,6 @@ import com.example.test3.databinding.FragmentInfoBinding;
 
 public class InfoFragment extends Fragment {
 
-    private FragmentInfoBinding binding;
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {

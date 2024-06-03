@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -22,11 +23,9 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
 {
 
   private   EditText Fname,Lname,Email,Password,Phone;
-   private MyDatabaseHelper myDatabaseHelper;
 
-   private  UserModel userModel;
    private TextView MoveLogin;
-   private  signUpModel upModel;
+   private  signUpModel signUpModel;
    private Button btnSignUp;
 
    @Override
@@ -34,14 +33,17 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
-
         SharedPreferences sharedPreferences = getSharedPreferences("user",MODE_PRIVATE);
+//        MyDatabaseHelper myDatabaseHelper = new MyDatabaseHelper(this);
+//        myDatabaseHelper.deleteAllUsers();
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear();
+//        editor.apply();
         if (!sharedPreferences.getString("email","").equals("") )
         {
             Intent intent = new Intent(signupActivity.this, StartActivity.class);
             startActivity(intent);
         }
-
         MoveLogin = findViewById(R.id.moveToLogin);
         btnSignUp = findViewById(R.id.signUpButton);
         Fname = findViewById(R.id.firstNameEditText);
@@ -49,10 +51,10 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         Email = findViewById(R.id.emailEditText);
         Password = findViewById(R.id.passwordEditText);
         Phone = findViewById(R.id.phoneEditText);
-        myDatabaseHelper = new MyDatabaseHelper(this);
         btnSignUp.setOnClickListener(this);
         MoveLogin.setOnClickListener(this);
-        upModel = new signUpModel();
+        signUpModel = new signUpModel(this);
+
     }
 
 
@@ -65,8 +67,6 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
             startActivity(intent);
 
         }
-
-
         if(Fname.getText().toString().trim().length() ==0 )
         {
             Toast.makeText(this, "write first name", Toast.LENGTH_SHORT).show();
@@ -76,9 +76,8 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         {
             Toast.makeText(this, "write last name", Toast.LENGTH_SHORT).show();
             return;
-
         }
-        if(upModel.EmailCheck(Email.getText().toString().trim()) == false)
+        if(signUpModel.EmailCheck(Email.getText().toString().trim()) == false)
         {
             Toast.makeText(this, "write email correctly please", Toast.LENGTH_SHORT).show();
             return;
@@ -103,15 +102,16 @@ public class signupActivity extends AppCompatActivity implements View.OnClickLis
         }
         if(btnSignUp == view)
         {
-            Toast.makeText(this, "", Toast.LENGTH_SHORT).show();
-            userModel = new UserModel(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
-            FireBaseDataBase fireBaseDataBase = new FireBaseDataBase();
-            fireBaseDataBase.AddUser(Fname.getText().toString(),Lname.getText().toString(),Password.getText().toString(),Email.getText().toString(),Phone.getText().toString());
-            myDatabaseHelper.addUser(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
+           if(signUpModel.emailExists(Email.getText().toString().trim()) == true)
+           {
+               Toast.makeText(this, "this email is already exist change email", Toast.LENGTH_SHORT).show();
+               return;
+           }
 
+            signUpModel.createUser(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
+            signUpModel.AddUserToDataBases(Fname.getText().toString().trim(),Lname.getText().toString().trim(),Email.getText().toString().trim(),Password.getText().toString().trim(),(Phone.getText().toString().trim()));
             Intent intent = new Intent(signupActivity.this, LoginActivity.class);
             startActivity(intent);
         }
     }
-
 }

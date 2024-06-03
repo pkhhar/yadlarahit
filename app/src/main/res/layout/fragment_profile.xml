@@ -20,25 +20,42 @@
             android:src="@drawable/loginimage"
             android:contentDescription="@string/app_name"/>
 
+
         <TextView
-            android:id="@+id/textViewUsername"
+            android:id="@+id/textViewFname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/imageViewUser"
+            android:text="sample"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="16dp"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="8dp"
             android:textSize="18sp"
             android:textStyle="bold"/>
 
         <TextView
+            android:id="@+id/textViewLname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+
+            android:layout_below="@id/textViewFname"
+            android:text="sample"
+            android:layout_marginTop="8dp"
+            android:textSize="18sp"
+            android:textStyle="bold"/>
+           <TextView
             android:id="@+id/textViewEmail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/textViewUsername"
+            android:layout_below="@id/textViewLname"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text=""
+            android:text="sample"
             android:textSize="16sp"/>
+
+
+
         <TextView
             android:id="@+id/textViewPhone"
             android:layout_width="wrap_content"
@@ -46,30 +63,34 @@
             android:layout_below="@id/textViewEmail"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="8dp"
-            android:text=""
+            android:text="sample"
             android:textSize="16sp" />
 
-        <TextView
-            android:layout_below="@id/textViewEmail"
+        <Button
+            android:clickable="true"
+            android:layout_below="@id/textViewPhone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/updateUser"
             android:layout_marginTop="15dp"
             android:text="update user"
-            android:layout_marginLeft="60dp"
+            android:layout_marginLeft="50dp"
             android:layout_alignParentLeft="true"
-            android:textSize="20dp"
+            android:textSize="15dp"
+            android:textAllCaps="false"
             />
-        <TextView
-            android:layout_below="@id/textViewEmail"
+        <Button
+            android:textAllCaps="false"
+            android:clickable="true"
+            android:layout_below="@id/textViewPhone"
             android:layout_alignParentRight="true"
-            android:layout_marginRight="60dp"
+            android:layout_marginRight="50dp"
             android:layout_marginTop="15dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/removeUser"
             android:text="remove user"
-            android:textSize="20dp"
+            android:textSize="15dp"
             />
 
 

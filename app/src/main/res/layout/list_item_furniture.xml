@@ -2,7 +2,10 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:clickable="true">
+    android:layout_rowSpan="1"
+ android:background="@drawable/border"
+    android:layout_marginTop="8dp"
+    >
 
     <ImageView
         android:id="@+id/imageDisplay"
@@ -12,27 +15,77 @@
         android:layout_height="150dp"
         />
 
+
+    <TextView
+        android:id="@+id/phoneDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sample"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@id/imageDisplay"
+        android:layout_centerHorizontal="true"
+        />
     <TextView
 
-        android:layout_below="@id/imageDisplay"
+        android:id="@+id/nameDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/nameDisplay"
+        android:layout_below="@id/imageDisplay"
         android:text="sample"
         android:layout_marginLeft="80dp"
-        android:layout_alignParentLeft="true"
-        android:textSize="20dp"
-        />
+        android:textSize="18dp"/>
+
     <TextView
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="80dp"
-        android:layout_below="@id/imageDisplay"
+        android:id="@+id/priceDisplay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/priceDisplay"
+        android:layout_below="@id/imageDisplay"
+        android:layout_marginLeft="180dp"
         android:text="sample"
-        android:textSize="20dp"
-        />
+        android:textSize="18dp" />
+
+    <TextView
+
+        android:id="@+id/lengthDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageDisplay"
+        android:layout_marginLeft="280dp"
+        android:text="sample"
+        android:textSize="18dp" />
+
+    <TextView
+        android:layout_marginBottom="8dp"
+        android:id="@+id/widthDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameDisplay"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="8dp"
+        android:text="sample"
+        android:textSize="18dp" />
+
+    <TextView
+        android:layout_marginBottom="8dp"
+        android:id="@+id/heightDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameDisplay"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="180dp"
+        android:text="sample"
+        android:textSize="18dp"/>
+
+    <TextView
+        android:layout_marginBottom="8dp"
+        android:id="@+id/colorDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/nameDisplay"
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="280dp"
+        android:text="sample"
+        android:textSize="18dp" />
 
 
 </RelativeLayout>

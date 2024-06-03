@@ -24,7 +24,7 @@ public class displayFurniture extends AppCompatActivity {
         FireBaseDataBase fireBaseDataBase = new FireBaseDataBase();
         recyclerView = findViewById(R.id.furniture_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        ProgressDialog pd = new ProgressDialog(getBaseContext());
+        ProgressDialog pd = new ProgressDialog(this);
         pd.setTitle("Searching all furniture");
         pd.setCancelable(false);
         pd.show();
@@ -36,5 +36,7 @@ public class displayFurniture extends AppCompatActivity {
 
             }
         });
+
+
     }
 }

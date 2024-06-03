@@ -1,0 +1,389 @@
+@startuml
+class com.example.test3.DB.FireBaseDataBase {
+- FirebaseStorage storage
+- StorageReference storageRef
+- FirebaseFirestore db
+- Context context
++ <<Create>> FireBaseDataBase(Context)
++ <<Create>> FireBaseDataBase()
++ void RemoveUserByEmail(String)
++ void AddUser(String,String,String,String,String)
++ void AddFurniture(String,String,String,String,String,String,String,String,String,Bitmap,Context)
++ void getSomeFurniture(String,searchDone)
++ void getInfo(String,String,Got)
++ void FindUser(String,String,FoundUser)
++ void deleteUser(String)
++ void GetDataToUpdate(String,String,String,String,FireBaseDataBase.WhenDone)
+}
+note left of com.example.test3.DB.FireBaseDataBase::storage
+ Firebase Storage and Firestore instances
+end note
+
+note left of com.example.test3.DB.FireBaseDataBase::RemoveUserByEmail(String)
+ Method to remove a user by their email
+end note
+note right of com.example.test3.DB.FireBaseDataBase::AddUser(String,String,String,String,String)
+ Method to add a new user
+end note
+note left of com.example.test3.DB.FireBaseDataBase::AddFurniture(String,String,String,String,String,String,String,String,String,Bitmap,Context)
+ Method to add furniture for a user
+end note
+note right of com.example.test3.DB.FireBaseDataBase::getSomeFurniture(String,searchDone)
+ Method to search for furniture by name or type
+end note
+note left of com.example.test3.DB.FireBaseDataBase::getInfo(String,String,Got)
+ Method to get furniture information and its picture URL
+end note
+note right of com.example.test3.DB.FireBaseDataBase::FindUser(String,String,FoundUser)
+ Method to find a user ID by email
+end note
+
+interface com.example.test3.DB.FireBaseDataBase$searchDone {
+~ void onSearchDone(LinkedList<FurnitureModel>)
+}
+note top of com.example.test3.DB.FireBaseDataBase$searchDone
+ Interface to handle search results callback
+end note
+
+
+interface com.example.test3.DB.FireBaseDataBase$Got {
+~ void onInfoGot(Uri)
+}
+note top of com.example.test3.DB.FireBaseDataBase$Got
+ Interface to handle getting furniture info callback
+end note
+
+
+interface com.example.test3.DB.FireBaseDataBase$FoundUser {
+~ void onFoundUser(boolean,String,String,String,String,String)
+}
+
+interface com.example.test3.DB.FireBaseDataBase$WhenDone {
+~ void whenDoneToUpdate()
+}
+
+class com.example.test3.repostory.Repository {
+~ FireBaseDataBase fireBaseDataBase
+~ MyDatabaseHelper myDatabaseHelper
++ <<Create>> Repository(Context)
++ void addUser(String,String,String,String,String)
++ boolean emailExists(String)
++ void userExist(String,String,FireBaseDataBase.FoundUser)
++ void removeUser(String)
++ void GetDataToUpdate(String,String,String,String,FireBaseDataBase.WhenDone)
+}
+
+
+class com.example.test3.ui.logout.LogoutFragment {
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+class com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter {
+~ List<FurnitureModel> furnitures
+~ FireBaseDataBase fireBaseDataBase
++ <<Create>> FurnitureRecyclerViewAdapter(List<FurnitureModel>)
++ ViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ViewHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter$ViewHolder {
+~ ImageView imageView
+~ TextView tvName
+~ FurnitureModel furniture
++ <<Create>> ViewHolder(View)
+}
+
+
+class com.example.test3.DB.MyDatabaseHelper {
+- Context context
+- MyDatabaseHelper databaseHelper
+- {static} String DATABASE_NAME
+- {static} int DATABASE_VERSION
+- {static} String TABLE_NAME
+- {static} String COLUMN_ID
+- {static} String COLUMN_Fname
+- {static} String COLUMN_Lname
+- {static} String COLUMN_Email
+- {static} String COLUMN_Password
+- {static} String COLUMN_Phone
++ <<Create>> MyDatabaseHelper(Context)
++ void onCreate(SQLiteDatabase)
++ void onUpgrade(SQLiteDatabase,int,int)
++ void addUser(String,String,String,String,String)
++ Cursor readAllData()
++ void updateUser(String,String,String,String,String,String)
++ void deleteUser(String)
++ void deleteAllUsers()
++ boolean emailExists(String)
++ int getRowNumberByEmail(String)
+}
+note left of com.example.test3.DB.MyDatabaseHelper::TABLE_NAME
+ Table and column names
+end note
+
+note left of com.example.test3.DB.MyDatabaseHelper::MyDatabaseHelper(Context)
+ Constructor
+end note
+note right of com.example.test3.DB.MyDatabaseHelper::onCreate(SQLiteDatabase)
+ Create table when the database is created
+end note
+note left of com.example.test3.DB.MyDatabaseHelper::onUpgrade(SQLiteDatabase,int,int)
+ Upgrade table schema if necessary
+end note
+note right of com.example.test3.DB.MyDatabaseHelper::addUser(String,String,String,String,String)
+ Add a new user to the database
+end note
+note left of com.example.test3.DB.MyDatabaseHelper::readAllData()
+ Read all data from the database
+end note
+note right of com.example.test3.DB.MyDatabaseHelper::updateUser(String,String,String,String,String,String)
+ Update an existing user's details in the database
+end note
+note left of com.example.test3.DB.MyDatabaseHelper::deleteUser(String)
+ Delete a user from the database
+end note
+note right of com.example.test3.DB.MyDatabaseHelper::deleteAllUsers()
+ Delete all users from the database
+end note
+note left of com.example.test3.DB.MyDatabaseHelper::emailExists(String)
+ Check if an email already exists in the database
+end note
+note right of com.example.test3.DB.MyDatabaseHelper::getRowNumberByEmail(String)
+ Get the row number by email
+end note
+
+class com.example.test3.repostory.FurnitureModel {
+- String PhoneUser
+- String emailUser
+- String name
+- String price
+- String length
+- String width
+- String height
+- String color
+- String type
+- String picPath
++ <<Create>> FurnitureModel(String,String,String,String,String,String,String,String,String,String)
++ <<Create>> FurnitureModel()
++ String getName()
++ void setName(String)
++ String getPrice()
++ void setPrice(String)
++ String getLength()
++ void setLength(String)
++ String getWidth()
++ void setWidth(String)
++ String getHeight()
++ void setHeight(String)
++ String getColor()
++ void setColor(String)
++ String getType()
++ void setType(String)
++ String getEmailUser()
++ void setEmailUser(String)
++ String getPicPath()
++ void setPicPath(String)
++ String getPhoneUser()
++ void setPhoneUser(String)
+}
+
+
+class com.example.test3.ui.info.InfoFragment {
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+class com.example.test3.ui.profileFragment.profileFragment {
+- View v
+- profileFragModel profileFragModel
+- MyDatabaseHelper myDatabaseHelper
+- AlertDialog dialog
+- SharedPreferences sharedPreferences
+- TextView fnameoftheAccount
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+note left of com.example.test3.ui.profileFragment.profileFragment::v
+ Declaring variables for views and other objects
+end note
+
+note left of com.example.test3.ui.profileFragment.profileFragment::onCreateView(LayoutInflater,ViewGroup,Bundle)
+ This method is called to create and return the view hierarchy associated with the fragment
+end note
+note right of com.example.test3.ui.profileFragment.profileFragment::onClick(View)
+ Handle button clicks
+end note
+
+class com.example.test3.ui.signUp.signupActivity {
+- EditText Fname
+- TextView MoveLogin
+- signUpModel signUpModel
+- Button btnSignUp
+# void onCreate(Bundle)
++ void onClick(View)
+}
+
+
+class com.example.test3.displayFurniture.displayFurniture {
+~ RecyclerView recyclerView
+# void onCreate(Bundle)
+}
+
+
+class com.example.test3.ui.start.StartActivity {
+- AppBarConfiguration mAppBarConfiguration
+- ActivityStartBinding binding
+# void onCreate(Bundle)
++ boolean onSupportNavigateUp()
+}
+
+
+class com.example.test3.ui.addItem.addItemActivity {
+- EditText name
+- Spinner spinnerType
+- ImageView imgView
+- Button btnAddFurniture
+- {static} int CAMERA_PERMISSION_CODE
+~ ActivityAddItemBinding addItemBinding
+~ ActivityResultLauncher<Intent> CameraResultLauncher
+~ Uri imageUri
+~ Bitmap photo
+# void onCreate(Bundle)
+- Uri createUri()
+- void registerPictureLuncher()
+- void checkCameraPermissionAndOpenCamera()
++ void onRequestPermissionsResult(int,String[],int[])
++ void onClick(View)
+}
+note top of com.example.test3.ui.addItem.addItemActivity
+ Define the main activity class for adding items
+end note
+
+note left of com.example.test3.ui.addItem.addItemActivity::name
+ Declare UI elements and other variables
+end note
+
+note left of com.example.test3.ui.addItem.addItemActivity::createUri()
+ Method to create a URI for storing the image
+end note
+note right of com.example.test3.ui.addItem.addItemActivity::registerPictureLuncher()
+ Method to register the camera launcher for capturing images
+end note
+note left of com.example.test3.ui.addItem.addItemActivity::checkCameraPermissionAndOpenCamera()
+ Method to check camera permission and open the camera if granted
+end note
+note right of com.example.test3.ui.addItem.addItemActivity::onRequestPermissionsResult(int,String[],int[])
+ Handle the result of the permission request
+end note
+note left of com.example.test3.ui.addItem.addItemActivity::onClick(View)
+ Handle the click events for the buttons
+end note
+
+class com.example.test3.ui.profileFragment.profileFragModel {
+- Context context
+- Repository repository
++ <<Create>> profileFragModel(Context)
++ void GetDataToUpdate(String,String,String,String,FireBaseDataBase.WhenDone)
++ void removeUser(String)
+}
+
+
+class com.example.test3.ui.home.HomeFragment {
+- Button btnSearch
+- EditText searchView
+- View v
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+note left of com.example.test3.ui.home.HomeFragment::btnSearch
+ Declaring buttons and search view
+end note
+
+note left of com.example.test3.ui.home.HomeFragment::onCreateView(LayoutInflater,ViewGroup,Bundle)
+ This method is called to create and return the view hierarchy associated with the fragment
+end note
+note right of com.example.test3.ui.home.HomeFragment::onClick(View)
+ Handle button clicks
+end note
+
+class com.example.test3.ui.login.LoginModel {
+~ Context context
+~ Repository repository
++ <<Create>> LoginModel(Context)
++ void userExist(String,String,FireBaseDataBase.FoundUser)
+}
+
+
+class com.example.test3.ui.signUp.signUpModel {
+~ Context context
+~ Repository repository
+~ UserModel userModel
++ <<Create>> signUpModel(Context)
++ void AddUserToDataBases(String,String,String,String,String)
++ boolean EmailCheck(String)
++ boolean emailExists(String)
++ void createUser(String,String,String,String,String)
+}
+
+
+class com.example.test3.ui.login.LoginActivity {
+- TextView movebacktosignup
+- EditText editTextPassword
+- Button buttonLogin
+- LoginModel loginModel
+- SharedPreferences sharedPreferences
+# void onCreate(Bundle)
++ void onClick(View)
+}
+
+
+class com.example.test3.repostory.UserModel {
+- {static} String firstName
+- {static} String lastName
+- {static} String password
+- {static} String email
+- {static} String phone
+- FireBaseDataBase firebaseHelper
++ <<Create>> UserModel()
++ <<Create>> UserModel(String,String,String,String,String)
++ void SearchFurniture(String,FireBaseDataBase.searchDone)
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getPassword()
++ void setPassword(String)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setphone(String)
+}
+
+
+
+
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$searchDone
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$Got
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$FoundUser
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$WhenDone
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.logout.LogoutFragment
+com.example.test3.displayFurniture.Adapter <|-- com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter
+com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter +.. com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter$ViewHolder
+com.example.test3.displayFurniture.ViewHolder <|-- com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter$ViewHolder
+android.database.sqlite.SQLiteOpenHelper <|-- com.example.test3.DB.MyDatabaseHelper
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.info.InfoFragment
+com.example.test3.ui.profileFragment.OnClickListener <|.. com.example.test3.ui.profileFragment.profileFragment
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.profileFragment.profileFragment
+com.example.test3.ui.signUp.OnClickListener <|.. com.example.test3.ui.signUp.signupActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.signUp.signupActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.displayFurniture.displayFurniture
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.start.StartActivity
+com.example.test3.ui.addItem.OnClickListener <|.. com.example.test3.ui.addItem.addItemActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.addItem.addItemActivity
+com.example.test3.ui.home.OnClickListener <|.. com.example.test3.ui.home.HomeFragment
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.home.HomeFragment
+com.example.test3.ui.login.OnClickListener <|.. com.example.test3.ui.login.LoginActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.login.LoginActivity
+@enduml

@@ -1,0 +1,273 @@
+@startuml
+class com.example.test3.DB.FireBaseDataBase {
+- FirebaseStorage storage
+- StorageReference storageRef
+- FirebaseFirestore db
+- Context context
++ void RemoveUserByEmail(String)
++ void AddUser(String,String,String,String,String)
++ void AddFurniture(String,String,String,String,String,String,String,String,String,Bitmap,Context)
++ void getSomeFurniture(String,searchDone)
++ void getInfo(String,String,Got)
++ void FindUser(String,String,FoundUser)
++ void deleteUser(String)
++ void GetDataToUpdate(String,String,String,String,FireBaseDataBase.WhenDone)
+}
+
+
+interface com.example.test3.DB.FireBaseDataBase$searchDone {
+~ void onSearchDone(LinkedList<FurnitureModel>)
+}
+
+interface com.example.test3.DB.FireBaseDataBase$Got {
+~ void onInfoGot(Uri)
+}
+
+interface com.example.test3.DB.FireBaseDataBase$FoundUser {
+~ void onFoundUser(boolean,String,String,String,String,String)
+}
+
+interface com.example.test3.DB.FireBaseDataBase$WhenDone {
+~ void whenDoneToUpdate()
+}
+
+class com.example.test3.repostory.Repository {
+~ FireBaseDataBase fireBaseDataBase
+~ MyDatabaseHelper myDatabaseHelper
++ void addUser(String,String,String,String,String)
++ boolean emailExists(String)
++ void userExist(String,String,FireBaseDataBase.FoundUser)
++ void removeUser(String)
++ void GetDataToUpdate(String,String,String,String,FireBaseDataBase.WhenDone)
+}
+
+
+class com.example.test3.ui.logout.LogoutFragment {
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+class com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter {
+~ List<FurnitureModel> furnitures
+~ FireBaseDataBase fireBaseDataBase
++ ViewHolder onCreateViewHolder(ViewGroup,int)
++ void onBindViewHolder(ViewHolder,int)
++ int getItemCount()
+}
+
+
+class com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter$ViewHolder {
+~ ImageView imageView
+~ TextView tvName
+~ FurnitureModel furniture
+}
+
+class com.example.test3.DB.MyDatabaseHelper {
+- Context context
+- MyDatabaseHelper databaseHelper
+- {static} String DATABASE_NAME
+- {static} int DATABASE_VERSION
+- {static} String TABLE_NAME
+- {static} String COLUMN_ID
+- {static} String COLUMN_Fname
+- {static} String COLUMN_Lname
+- {static} String COLUMN_Email
+- {static} String COLUMN_Password
+- {static} String COLUMN_Phone
++ void onCreate(SQLiteDatabase)
++ void onUpgrade(SQLiteDatabase,int,int)
++ void addUser(String,String,String,String,String)
++ Cursor readAllData()
++ void updateUser(String,String,String,String,String,String)
++ void deleteUser(String)
++ void deleteAllUsers()
++ boolean emailExists(String)
++ int getRowNumberByEmail(String)
+}
+
+
+class com.example.test3.repostory.FurnitureModel {
+- String PhoneUser
+- String emailUser
+- String name
+- String price
+- String length
+- String width
+- String height
+- String color
+- String type
+- String picPath
++ String getName()
++ void setName(String)
++ String getPrice()
++ void setPrice(String)
++ String getLength()
++ void setLength(String)
++ String getWidth()
++ void setWidth(String)
++ String getHeight()
++ void setHeight(String)
++ String getColor()
++ void setColor(String)
++ String getType()
++ void setType(String)
++ String getEmailUser()
++ void setEmailUser(String)
++ String getPicPath()
++ void setPicPath(String)
++ String getPhoneUser()
++ void setPhoneUser(String)
+}
+
+
+class com.example.test3.ui.info.InfoFragment {
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
+}
+
+class com.example.test3.ui.profileFragment.profileFragment {
+- View v
+- profileFragModel profileFragModel
+- MyDatabaseHelper myDatabaseHelper
+- AlertDialog dialog
+- SharedPreferences sharedPreferences
+- TextView fnameoftheAccount
++ void onCreate(Bundle)
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+
+
+class com.example.test3.ui.signUp.signupActivity {
+- EditText Fname
+- TextView MoveLogin
+- signUpModel signUpModel
+- Button btnSignUp
+# void onCreate(Bundle)
++ void onClick(View)
+}
+
+
+class com.example.test3.displayFurniture.displayFurniture {
+~ RecyclerView recyclerView
+# void onCreate(Bundle)
+}
+
+
+class com.example.test3.ui.start.StartActivity {
+- AppBarConfiguration mAppBarConfiguration
+- ActivityStartBinding binding
+# void onCreate(Bundle)
++ boolean onSupportNavigateUp()
+}
+
+
+class com.example.test3.ui.addItem.addItemActivity {
+- EditText name
+- Spinner spinnerType
+- ImageView imgView
+- Button btnAddFurniture
+- {static} int CAMERA_PERMISSION_CODE
+~ ActivityAddItemBinding addItemBinding
+~ ActivityResultLauncher<Intent> CameraResultLauncher
+~ Uri imageUri
+~ Bitmap photo
+# void onCreate(Bundle)
+- Uri createUri()
+- void registerPictureLuncher()
+- void checkCameraPermissionAndOpenCamera()
++ void onRequestPermissionsResult(int,String[],int[])
++ void onClick(View)
+}
+
+
+class com.example.test3.ui.profileFragment.profileFragModel {
+- Context context
+- Repository repository
++ void GetDataToUpdate(String,String,String,String,FireBaseDataBase.WhenDone)
++ void removeUser(String)
+}
+
+
+class com.example.test3.ui.home.HomeFragment {
+- Button btnSearch
+- EditText searchView
+- View v
++ View onCreateView(LayoutInflater,ViewGroup,Bundle)
++ void onClick(View)
+}
+
+
+class com.example.test3.ui.login.LoginModel {
+~ Context context
+~ Repository repository
++ void userExist(String,String,FireBaseDataBase.FoundUser)
+}
+
+
+class com.example.test3.ui.signUp.signUpModel {
+~ Context context
+~ Repository repository
+~ UserModel userModel
++ void AddUserToDataBases(String,String,String,String,String)
++ boolean EmailCheck(String)
++ boolean emailExists(String)
++ void createUser(String,String,String,String,String)
+}
+
+
+class com.example.test3.ui.login.LoginActivity {
+- TextView movebacktosignup
+- EditText editTextPassword
+- Button buttonLogin
+- LoginModel loginModel
+- SharedPreferences sharedPreferences
+# void onCreate(Bundle)
++ void onClick(View)
+}
+
+
+class com.example.test3.repostory.UserModel {
+- {static} String firstName
+- {static} String lastName
+- {static} String password
+- {static} String email
+- {static} String phone
+- FireBaseDataBase firebaseHelper
++ void SearchFurniture(String,FireBaseDataBase.searchDone)
++ String getFirstName()
++ void setFirstName(String)
++ String getLastName()
++ void setLastName(String)
++ String getPassword()
++ void setPassword(String)
++ String getEmail()
++ void setEmail(String)
++ String getPhone()
++ void setphone(String)
+}
+
+
+
+
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$searchDone
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$Got
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$FoundUser
+com.example.test3.DB.FireBaseDataBase +.. com.example.test3.DB.FireBaseDataBase$WhenDone
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.logout.LogoutFragment
+com.example.test3.displayFurniture.Adapter <|-- com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter
+com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter +.. com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter$ViewHolder
+com.example.test3.displayFurniture.ViewHolder <|-- com.example.test3.displayFurniture.FurnitureRecyclerViewAdapter$ViewHolder
+android.database.sqlite.SQLiteOpenHelper <|-- com.example.test3.DB.MyDatabaseHelper
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.info.InfoFragment
+com.example.test3.ui.profileFragment.OnClickListener <|.. com.example.test3.ui.profileFragment.profileFragment
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.profileFragment.profileFragment
+com.example.test3.ui.signUp.OnClickListener <|.. com.example.test3.ui.signUp.signupActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.signUp.signupActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.displayFurniture.displayFurniture
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.start.StartActivity
+com.example.test3.ui.addItem.OnClickListener <|.. com.example.test3.ui.addItem.addItemActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.addItem.addItemActivity
+com.example.test3.ui.home.OnClickListener <|.. com.example.test3.ui.home.HomeFragment
+androidx.fragment.app.Fragment <|-- com.example.test3.ui.home.HomeFragment
+com.example.test3.ui.login.OnClickListener <|.. com.example.test3.ui.login.LoginActivity
+androidx.appcompat.app.AppCompatActivity <|-- com.example.test3.ui.login.LoginActivity
+@enduml

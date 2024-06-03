@@ -2,6 +2,8 @@ package com.example.test3.repostory;
 
 public class FurnitureModel {
 
+    private String PhoneUser;
+    private String emailUser;
     private String name;
     private String price;
     private String length;
@@ -9,11 +11,11 @@ public class FurnitureModel {
     private String height;
     private String color;
     private String type;
-    private byte[] image;
+    private String  picPath;
 
 
 
-    public FurnitureModel(String name, String price, String length, String width, String height, String color, String type) {
+    public FurnitureModel(String name, String price, String length, String width, String height, String color, String type,String currentEmail,String picPath,String Phone) {
         this.name = name;
         this.price = price;
         this.length = length;
@@ -21,6 +23,9 @@ public class FurnitureModel {
         this.height = height;
         this.color = color;
         this.type = type;
+        this.emailUser = currentEmail;
+        this.picPath = picPath;
+        this.PhoneUser = Phone;
     }
     public  FurnitureModel() {}
 
@@ -80,5 +85,26 @@ public class FurnitureModel {
         this.type = type;
     }
 
+    public String getEmailUser() {
+        return this.emailUser;
+    }
 
+    public void setEmailUser(String currentEmail) {
+        this.emailUser = currentEmail;
+    }
+    public String getPicPath() {
+        return this.picPath;
+    }
+
+    public void setPicPath(String picPath) {
+        this.picPath = picPath;
+    }
+
+    public String getPhoneUser() {
+        return this.PhoneUser;
+    }
+
+    public void setPhoneUser(String Phone) {
+        this.PhoneUser = Phone;
+    }
 }

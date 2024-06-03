@@ -18,14 +18,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Test3"
         tools:targetApi="31">
+
         <activity
             android:name=".displayFurniture.displayFurniture"
-            android:exported="false" />
-        <activity
-            android:name=".viewproductactivity.ViewProductActivity"
-            android:exported="false" />
-        <activity
-            android:name=".product.productActivity"
             android:exported="false" />
         <activity
             android:name=".ui.signUp.signupActivity"

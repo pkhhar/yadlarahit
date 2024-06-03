@@ -1,17 +1,43 @@
-package com.example.test3.ui.signUp;public class signUpModel
+package com.example.test3.ui.signUp;
+
+import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
+
+import com.example.test3.repostory.Repository;
+import com.example.test3.repostory.UserModel;
+import com.example.test3.ui.start.StartActivity;
+
+public class signUpModel
 {
+    Context context;
+
+    Repository repository;
 
 
-    public boolean EmailCheck(String semail)
-    {
-        if (semail.length() ==0)
+    UserModel userModel;
+
+    public signUpModel(Context c) {
+        this.context = c;
+        repository = new Repository(c);
+        userModel = new UserModel();
+    }
+    public void AddUserToDataBases(String Fname,String Lname,String Email,String Password,String Phone) {
+
+        repository.addUser(Fname,Lname,Email,Password,Phone);
+    }
+
+
+    public boolean EmailCheck(String semail) {
+        if (semail.length() == 0)
         {
-            return  false;
+
+            return false;
         }
         //check if . and @ is not the first char or the last char
         if (semail.charAt(semail.length() - 1) == '.' || semail.charAt(semail.length() - 1) == '@' || semail.charAt(0) == '.' || semail.charAt(0) == '@') {
-        return false;
-    }
+            return false;
+        }
         int counter = 0;
         for (int i = 0; i < semail.length() - 2; i++) {
             //checks if . come after @
@@ -30,12 +56,20 @@ package com.example.test3.ui.signUp;public class signUpModel
                 return false;
             }
 
+
         }
-        //check if @ exist more than one time
+
         if (counter != 1) {
             return false;
         }
         return true;
     }
+
+    public boolean emailExists(String semail){return repository.emailExists(semail);}
+
+    public void createUser(String firstName, String lastName,String email,  String password, String phone) {
+        userModel = new UserModel(firstName,lastName,email,password,phone);
+    }
+
 
 }

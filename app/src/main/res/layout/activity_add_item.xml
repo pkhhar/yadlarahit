@@ -11,7 +11,8 @@
    <ImageView
        android:id="@+id/uploadPicture"
        android:layout_width="match_parent"
-       android:layout_height="150dp"/>
+       android:layout_height="150dp"
+       android:src="@drawable/ic_menu_camera"/>
     <Button
         android:id="@+id/btnTakePicture"
         android:layout_width="match_parent"
