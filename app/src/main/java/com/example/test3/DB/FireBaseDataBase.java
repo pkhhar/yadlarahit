@@ -38,19 +38,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class FireBaseDataBase {
     // Firebase Storage and Firestore instances
-   private FirebaseStorage storage = FirebaseStorage.getInstance();
-   private StorageReference storageRef = storage.getReference();
-   private FirebaseFirestore db = FirebaseFirestore.getInstance();
+    private FirebaseStorage storage = FirebaseStorage.getInstance();
+    private StorageReference storageRef = storage.getReference();
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Context context;
 
-    public FireBaseDataBase(Context context)
-    {
+    // Constructor with context
+    public FireBaseDataBase(Context context) {
         this.context = context;
-
     }
-    public FireBaseDataBase()
-    {
 
+    // Default constructor
+    public FireBaseDataBase() {
     }
 
     // Method to remove a user by their email
@@ -64,13 +63,15 @@ public class FireBaseDataBase {
         // Query for the user document based on the email
         Query query = db.collection("users").whereEqualTo("Email", userEmail);
 
+        // Execute the query
         query.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            // For each document found (should ideally be just one)
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                // Delete each document found (should ideally be just one)
+                                // Delete the document
                                 document.getReference().delete()
                                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                                             @Override
@@ -93,7 +94,7 @@ public class FireBaseDataBase {
     }
 
     // Method to add a new user
-    public void AddUser(String firstName, String lastName,String email,String password, String phone) {
+    public void AddUser(String firstName, String lastName, String email, String password, String phone) {
         // Create a new user with a first and last name
         Map<String, Object> user = new HashMap<>();
         user.put("firstName", firstName);
@@ -102,8 +103,7 @@ public class FireBaseDataBase {
         user.put("Password", password);
         user.put("Phone", phone);
 
-        // Add a new document with a generated ID
-
+        // Add a new document with a generated ID to the 'users' collection
         db.collection("users").add(user).addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
@@ -118,99 +118,84 @@ public class FireBaseDataBase {
                 });
     }
 
-    // Interface to handle found email callback
-//    public interface FoundEmail {
-//        void onFoundEmail(String id);
-//    }
-//
-//    // Method to find a user ID by email
-//    public void FindId(String email, FoundEmail callback) {
-//        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//            @Override
-//            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                for (DocumentSnapshot document : task.getResult()) {
-//                    if (document.getData().get("Email").equals(email)) {
-//                        callback.onFoundEmail(document.getId());
-//                    }
-//                }
-//            }
-//        });
-//    }
-
     // Method to add furniture for a user
-    public void AddFurniture(String phone,String email, String Name, String Price, String Length, String Width, String Height, String Color, String Type, Bitmap picture, Context context) {
+    public void AddFurniture(String phone, String email, String Name, String Price, String Length, String Width, String Height, String Color, String Type, Bitmap picture, Context context) {
+        // Show a progress dialog
         ProgressDialog pd = new ProgressDialog(context);
         pd.setTitle("Adding Furniture");
         pd.setCancelable(false);
         pd.show();
 
+        // Generate a unique path for the image
         String picPath = "images/" + UUID.randomUUID();
         // Create a reference to the image path
         StorageReference ImagesRef = storageRef.child(picPath);
 
+        // Convert the bitmap to a byte array
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         picture.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         byte[] data = baos.toByteArray();
 
+        // Upload the image to Firebase Storage
         ImagesRef.putBytes(data).addOnCompleteListener(new OnCompleteListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onComplete(@NonNull Task<UploadTask.TaskSnapshot> task) {
                 if (task.isSuccessful()) {
-                    db.collection("users")
-                            .get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                @Override
-                                public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                    if (task.isSuccessful()) {
-                                        boolean userFound = false;
-                                        for (QueryDocumentSnapshot document : task.getResult()) {
-                                            if (document.getData().get("Email").toString().equals(email)) {
-                                                userFound = true;
-                                                String id = document.getId();
-                                                Map<String, Object> user = new HashMap<>();
-                                                user.put("Name", Name);
-                                                user.put("Price", Price);
-                                                user.put("Length", Length);
-                                                user.put("Width", Width);
-                                                user.put("Height", Height);
-                                                user.put("Color", Color);
-                                                user.put("Type", Type);
-                                                user.put("Email", email);
-                                                user.put("PicPath", picPath);
-                                                user.put("Phone",phone);
+                    // Query the 'users' collection to find the user by email
+                    db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                        @Override
+                        public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                            if (task.isSuccessful()) {
+                                boolean userFound = false;
+                                for (QueryDocumentSnapshot document : task.getResult()) {
+                                    if (document.getData().get("Email").toString().equals(email)) {
+                                        userFound = true;
+                                        String id = document.getId();
+                                        // Create a map for the furniture data
+                                        Map<String, Object> user = new HashMap<>();
+                                        user.put("Name", Name);
+                                        user.put("Price", Price);
+                                        user.put("Length", Length);
+                                        user.put("Width", Width);
+                                        user.put("Height", Height);
+                                        user.put("Color", Color);
+                                        user.put("Type", Type);
+                                        user.put("Email", email);
+                                        user.put("PicPath", picPath);
+                                        user.put("Phone", phone);
 
-                                                // Add a new document with a generated ID
-                                                db.collection("users").document(document.getId()).collection("Furniture")
-                                                        .add(user)
-                                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                                            @Override
-                                                            public void onSuccess(DocumentReference documentReference) {
-                                                                Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
-                                                                pd.dismiss();
-                                                                Intent intent = new Intent(context, StartActivity.class);
-                                                                context.startActivity(intent);
-                                                            }
-                                                        })
-                                                        .addOnFailureListener(new OnFailureListener() {
-                                                            @Override
-                                                            public void onFailure(@NonNull Exception e) {
-                                                                Log.w(TAG, "Error adding document", e);
-                                                                pd.dismiss();
-                                                            }
-                                                        });
-                                                break; // Exit the loop once the user is found and processed
-                                            }
-                                        }
-                                        if (!userFound) {
-                                            Log.w(TAG, "User not found with email: " + email);
-                                            pd.dismiss();
-                                        }
-                                    } else {
-                                        Log.w(TAG, "Error getting documents.", task.getException());
-                                        pd.dismiss();
+                                        // Add the furniture data to the user's 'Furniture' subcollection
+                                        db.collection("users").document(document.getId()).collection("Furniture")
+                                                .add(user)
+                                                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                                                    @Override
+                                                    public void onSuccess(DocumentReference documentReference) {
+                                                        Log.d(TAG, "DocumentSnapshot added with ID: " + documentReference.getId());
+                                                        pd.dismiss();
+                                                        Intent intent = new Intent(context, StartActivity.class);
+                                                        context.startActivity(intent);
+                                                    }
+                                                })
+                                                .addOnFailureListener(new OnFailureListener() {
+                                                    @Override
+                                                    public void onFailure(@NonNull Exception e) {
+                                                        Log.w(TAG, "Error adding document", e);
+                                                        pd.dismiss();
+                                                    }
+                                                });
+                                        break; // Exit the loop once the user is found and processed
                                     }
                                 }
-                            });
+                                if (!userFound) {
+                                    Log.w(TAG, "User not found with email: " + email);
+                                    pd.dismiss();
+                                }
+                            } else {
+                                Log.w(TAG, "Error getting documents.", task.getException());
+                                pd.dismiss();
+                            }
+                        }
+                    });
                 } else {
                     Log.w(TAG, "Error uploading image.", task.getException());
                     pd.dismiss();
@@ -224,7 +209,6 @@ public class FireBaseDataBase {
             }
         });
     }
-
 
     // Interface to handle search results callback
     public interface searchDone {
@@ -248,11 +232,11 @@ public class FireBaseDataBase {
                                     index2.set(index2.get() + 1);
                                     for (DocumentSnapshot document2 : task.getResult()) {
                                         if (document2.getData().get("Name").toString().equals(Furniture)) {
-                                            FurnitureModel temp = new FurnitureModel(document2.getData().get("Name").toString(), document2.getData().get("Price").toString(), document2.getData().get("Length").toString(), document2.getData().get("Width").toString(), document2.getData().get("Height").toString(), document2.getData().get("Color").toString(), document2.getData().get("Type").toString(), document2.getData().get("Email").toString(), document2.getData().get("PicPath").toString(),document2.getData().get("Phone").toString().trim());
+                                            FurnitureModel temp = new FurnitureModel(document2.getData().get("Name").toString(), document2.getData().get("Price").toString(), document2.getData().get("Length").toString(), document2.getData().get("Width").toString(), document2.getData().get("Height").toString(), document2.getData().get("Color").toString(), document2.getData().get("Type").toString(), document2.getData().get("Email").toString(), document2.getData().get("PicPath").toString(), document2.getData().get("Phone").toString().trim());
                                             list.add(temp);
                                         }
                                         if (document2.getData().get("Type").toString().equals(Furniture)) {
-                                            FurnitureModel temp = new FurnitureModel(document2.getData().get("Name").toString(), document2.getData().get("Price").toString(), document2.getData().get("Length").toString(), document2.getData().get("Width").toString(), document2.getData().get("Height").toString(), document2.getData().get("Color").toString(), document2.getData().get("Type").toString(), document2.getData().get("Email").toString(), document2.getData().get("PicPath").toString(),document2.getData().get("Phone").toString().trim());
+                                            FurnitureModel temp = new FurnitureModel(document2.getData().get("Name").toString(), document2.getData().get("Price").toString(), document2.getData().get("Length").toString(), document2.getData().get("Width").toString(), document2.getData().get("Height").toString(), document2.getData().get("Color").toString(), document2.getData().get("Type").toString(), document2.getData().get("Email").toString(), document2.getData().get("PicPath").toString(), document2.getData().get("Phone").toString().trim());
                                             list.add(temp);
                                         }
                                     }
@@ -272,6 +256,7 @@ public class FireBaseDataBase {
     public interface Got {
         void onInfoGot(Uri photo);
     }
+
     // Method to get furniture information and its picture URL
     public void getInfo(String email, String PicPath, Got callback) {
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -284,14 +269,12 @@ public class FireBaseDataBase {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     for (DocumentSnapshot furniture : task.getResult()) {
-
-                                        if (furniture.getData().get("PicPath").equals(PicPath.toString().trim()))
-                                        {
+                                        if (furniture.getData().get("PicPath").equals(PicPath.toString().trim())) {
+                                            // Get the download URL of the image from Firebase Storage
                                             StorageReference httpsReference = storage.getReferenceFromUrl("gs://yadlarahit.appspot.com/" + furniture.getData().get("PicPath"));
                                             httpsReference.getDownloadUrl().addOnCompleteListener(new OnCompleteListener<Uri>() {
                                                 @Override
-                                                public void onComplete(@NonNull Task<Uri> task)
-                                                {
+                                                public void onComplete(@NonNull Task<Uri> task) {
                                                     callback.onInfoGot(task.getResult());
                                                 }
                                             });
@@ -306,99 +289,87 @@ public class FireBaseDataBase {
         });
     }
 
-    public interface FoundUser
-    {
-        void onFoundUser(boolean flag,String Fname,String Lname, String Password ,String Email,String Phone);
+    // Interface to handle found user callback
+    public interface FoundUser {
+        void onFoundUser(boolean flag, String Fname, String Lname, String Password, String Email, String Phone);
     }
 
-    // Method to find a user ID by email
-    public void FindUser(String email,String password, FoundUser callback) {
+    // Method to find a user by email and password
+    public void FindUser(String email, String password, FoundUser callback) {
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 for (DocumentSnapshot document : task.getResult()) {
-                    if (document.getData().get("Email").equals(email) && document.getData().get("Password").equals(password))
-                    {
-                        callback.onFoundUser(true,document.getData().get("firstName").toString().trim(),document.getData().get("lastName").toString().trim(),document.getData().get("Password").toString().trim(),document.getData().get("Email").toString().trim(),document.getData().get("Phone").toString().trim());
+                    if (document.getData().get("Email").equals(email) && document.getData().get("Password").equals(password)) {
+                        callback.onFoundUser(true, document.getData().get("firstName").toString().trim(), document.getData().get("lastName").toString().trim(), document.getData().get("Password").toString().trim(), document.getData().get("Email").toString().trim(), document.getData().get("Phone").toString().trim());
                     }
                 }
-                callback.onFoundUser(false,null,null,null,null,null);
+                callback.onFoundUser(false, null, null, null, null, null);
             }
         });
     }
+
+    // Method to delete a user by email
     public void deleteUser(String email) {
-
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>()
-        {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> taskUserList) {
-                        if (taskUserList.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : taskUserList.getResult()) {
-                                if (document.getData().get("Email").toString().equals(email)) {
-                                    // Delete user from Firestore
-                                    db.collection("users").document(document.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
-                                        @Override
-                                        public void onComplete(@NonNull Task<Void> task) {
-                                            if (task.isSuccessful()) {
-                                                Log.d(TAG, "User successfully deleted from Firestore.");
-
-
-
-                                            } else
-                                            {
-                                                Log.w(TAG, "Failed to delete user from Firestore: " + task.getException().getMessage());
-                                            }
-                                        }
-                                    });
+        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> taskUserList) {
+                if (taskUserList.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : taskUserList.getResult()) {
+                        if (document.getData().get("Email").toString().equals(email)) {
+                            // Delete user from Firestore
+                            db.collection("users").document(document.getId()).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        Log.d(TAG, "User successfully deleted from Firestore.");
+                                    } else {
+                                        Log.w(TAG, "Failed to delete user from Firestore: " + task.getException().getMessage());
+                                    }
                                 }
-                            }
-                        } else
-                        {
-                            Log.w(TAG, "Error getting user documents: " + taskUserList.getException().getMessage());
+                            });
                         }
                     }
-                });
+                } else {
+                    Log.w(TAG, "Error getting user documents: " + taskUserList.getException().getMessage());
+                }
+            }
+        });
     }
+
+    // Interface to handle the callback when data update is done
     public interface WhenDone {
         void whenDoneToUpdate();
     }
-    public void GetDataToUpdate(String fname,String lname,String email,String phone,FireBaseDataBase.WhenDone callBack){
 
-
+    // Method to update user data
+    public void GetDataToUpdate(String fname, String lname, String email, String phone, FireBaseDataBase.WhenDone callBack) {
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> taskUserList) {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> taskUserList) {
+                if (taskUserList.isSuccessful()) {
+                    for (QueryDocumentSnapshot document : taskUserList.getResult()) {
+                        if (document.getData().get("Email").toString().equals(email)) {
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("firstName", fname);
+                            user.put("lastName", lname);
+                            user.put("Phone", phone);
 
-                        if (taskUserList.isSuccessful()) {
-
-                            for (QueryDocumentSnapshot document : taskUserList.getResult()) {
-                                if(document.getData().get("Email").toString().equals(email)){
-
-
-                                    Map<String, Object> user = new HashMap<>();
-                                    user.put("firstName", fname);
-                                    user.put("lastName", lname);
-                                    user.put("Phone", phone);
-                                        db.collection("users").document(document.getId()).update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if (task.isSuccessful())
-                                                {
-                                                callBack.whenDoneToUpdate();
-                                                }
-                                            }
-                                        });
+                            // Update the user document
+                            db.collection("users").document(document.getId()).update(user).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+                                    if (task.isSuccessful()) {
+                                        callBack.whenDoneToUpdate();
+                                    }
                                 }
-                            }
-
-                        } else {
-                            Log.w(TAG, "Error getting documents.", taskUserList.getException());
+                            });
                         }
                     }
-                });
-
-
+                } else {
+                    Log.w(TAG, "Error getting documents.", taskUserList.getException());
+                }
+            }
+        });
     }
-
-
 }
